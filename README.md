@@ -67,16 +67,41 @@ Running the script creates:
 
 Using the current `data.xlsx`, the calculated results are:
 
-| Metric | Result |
-|---|---:|
-| Total company footprint | **928.20 ± 388.64 tCO2e** |
+| Metric                                 |                         Result |
+| -------------------------------------- | -----------------------------: |
+| Total company footprint                |      **928.20 ± 388.64 tCO2e** |
 | Footprint per employee (179 employees) | **5.19 ± 2.17 tCO2e/employee** |
 
-| Scope | Emissions | Share |
-|---|---:|---:|
-| Scope 1 | **405.00 ± 45.28 tCO2e** | **43.6%** |
-| Scope 2 | **37.71 ± 19.60 tCO2e** | **4.1%** |
+| Scope   |                 Emissions |     Share |
+| ------- | ------------------------: | --------: |
+| Scope 1 |  **405.00 ± 45.28 tCO2e** | **43.6%** |
+| Scope 2 |   **37.71 ± 19.60 tCO2e** |  **4.1%** |
 | Scope 3 | **485.49 ± 323.75 tCO2e** | **52.3%** |
+
+## Figures and visual analysis
+
+### Carbon footprint per scope
+
+![Carbon footprint per scope](./figures/carbon_footprint_per_scope.png)
+
+This pie chart shows the relative contribution of each GHG Protocol scope.
+Scope 3 is the largest contributor, representing **52.3%** of the total
+footprint, followed by Scope 1 with **43.6%**. Scope 2 represents only
+**4.1%**. Therefore, the greatest reduction potential lies in direct fuel
+consumption, fleet-related activities, and the purchased goods and services
+included in Scope 3.
+
+### Emissions by source with uncertainty
+
+![Emissions by source with uncertainty](./figures/emissions_by_source_with_uncertainty.png)
+
+This chart displays the central emissions estimate for every source. The
+horizontal error bars represent the absolute uncertainty associated with each
+estimate. Fuel consumption is the largest source, followed by thermal cars,
+electric cars, and other consultancy fees. The wide uncertainty ranges for
+vehicle and financial-procurement sources indicate that supplier-specific
+emission factors and more precise activity data should be priorities for
+improving future assessments.
 
 The dominant sources are **Cars (thermal)**, **E-cars**, **Other consultancy
 fees**, and **Fuel consumption**. Scope 3 is therefore the main reduction
@@ -86,21 +111,21 @@ embodied emissions.
 
 ## Interpretation and recommendations
 
-1. **Prioritize fleet and mobility.** Thermal cars are the largest source.
+1. **Prioritize fleet and mobility:** Thermal cars are the largest source.
    Replace combustion vehicles with low-carbon alternatives, reduce mileage
    through travel policies, encourage public transport and car sharing, and
    measure vehicle activity separately by fuel type and distance.
-2. **Improve Scope 3 procurement data.** Consultancy fees and other financial
+2. **Improve Scope 3 procurement data:** Consultancy fees and other financial
    categories dominate Scope 3 and have high factor uncertainty. Request
    supplier-specific product carbon footprints, distinguish purchased services
    from spend-based estimates, and update the factors annually.
-3. **Reduce office and vehicle electricity demand.** Combine efficiency measures
+3. **Reduce office and vehicle electricity demand:** Combine efficiency measures
    with renewable electricity contracts and verify the market- and
    location-based electricity factors used in the inventory.
-4. **Extend the digital and equipment life cycle.** Keep laptops and printers
+4. **Extend the digital and equipment life cycle:** Keep laptops and printers
    in service longer, repair and refurbish equipment, buy lower-carbon models,
    and reduce unnecessary data storage and online meeting time.
-5. **Use the uncertainty results to guide data collection.** Better activity
+5. **Use the uncertainty results to guide data collection:** Better activity
    data and supplier-specific emission factors will improve the reliability of
    future inventories more than adding precision to already uncertain
    calculations.
