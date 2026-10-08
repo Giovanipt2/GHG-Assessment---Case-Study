@@ -38,14 +38,60 @@ combined uncertainty = sqrt(Ufe² + Udata²)
 The absolute uncertainty is then calculated from the central emission. This is
 why the existing `GHG Emissions` column is retained as an input/reference
 column, while the new central-emission columns provide the inventory used for
-the results. The workbook's `Upost` values are checked against this formula by
-the data structure, but the calculation is recomputed from `Ufe` and `Udata`
-to avoid silently trusting a derived input.
+the results. The workbook's `Upost` and `GHG Emissions` values are retained for
+traceability, but the calculation is recomputed from `Ufe` and `Udata` rather
+than silently trusting derived input values. In the current workbook,
+`GHG Emissions` corresponds to the absolute uncertainty, not to the central
+emission, despite its column name.
 
 The script converts kilograms to tonnes using `1 tCO2e = 1,000 kgCO2e`.
-Scope totals are obtained by summing source-level emissions. The uncertainty
-reported for a total is the sum of the source absolute uncertainties, which is
-a conservative aggregation suitable for this assessment.
+Scope totals are obtained by summing source-level emissions.
+
+### Uncertainty aggregation and assumptions
+
+The uncertainty treatment relies on the following assumptions:
+
+1. `Ufe` and `Udata` are relative uncertainty components expressed as decimal
+   fractions, not percentages. For example, `0.10` means **10%**.
+2. The factor and activity-data uncertainties are combined by the
+   root-sum-of-squares formula. This assumes that these two components are
+   sufficiently independent within a source and that they represent comparable
+   uncertainty measures.
+3. The source uncertainty is propagated linearly from the central emission:
+
+   ```text
+   source uncertainty = central emissions × combined uncertainty
+   ```
+
+4. The total and scope uncertainties are calculated by summing the absolute
+   uncertainties of their sources:
+
+   ```text
+   total uncertainty = sum(source uncertainties)
+   ```
+
+The last choice is deliberately conservative. The dataset does not provide
+correlation coefficients, probability distributions, confidence levels, or
+enough information to demonstrate that all source uncertainties are
+independent. Some sources may also share emission factors, spend-based
+assumptions, supplier data, or other systematic effects. Adding absolute
+uncertainties therefore avoids cancelling potentially correlated errors and
+reduces the risk of presenting an unrealistically precise company total.
+
+If every source uncertainty were demonstrated to be statistically independent
+and expressed on the same probabilistic basis, a less conservative alternative
+would be:
+
+```text
+total uncertainty = sqrt(sum(source uncertainty²))
+```
+
+That alternative is not used here because its independence assumption is not
+supported by the available workbook. Consequently, the reported `±` values
+should be interpreted as conservative uncertainty ranges based on the stated
+inputs, not automatically as formal 95% confidence intervals. The lower and
+upper bounds are calculated as `central estimate ± uncertainty` and should be
+read with the same qualification.
 
 ## Deliverables
 
@@ -65,18 +111,15 @@ Running the script creates:
 
 ## Results for the current workbook
 
-Using the current `data.xlsx`, the calculated results are:
+Using the current `data.xlsx`, the final results are:
 
-| Metric                                 |                         Result |
-| -------------------------------------- | -----------------------------: |
-| Total company footprint                |      **928.20 ± 388.64 tCO2e** |
-| Footprint per employee (179 employees) | **5.19 ± 2.17 tCO2e/employee** |
-
-| Scope   |                 Emissions |     Share |
-| ------- | ------------------------: | --------: |
-| Scope 1 |  **405.00 ± 45.28 tCO2e** | **43.6%** |
-| Scope 2 |   **37.71 ± 19.60 tCO2e** |  **4.1%** |
-| Scope 3 | **485.49 ± 323.75 tCO2e** | **52.3%** |
+| Result | Value |
+|---|---:|
+| Total company footprint | **928.20 ± 388.64 tCO2e** |
+| Footprint per employee | **5.19 ± 2.17 tCO2e/employee** |
+| Scope 1 footprint | **405.00 ± 45.28 tCO2e (43.6%)** |
+| Scope 2 footprint | **37.71 ± 19.60 tCO2e (4.1%)** |
+| Scope 3 footprint | **485.49 ± 323.75 tCO2e (52.3%)** |
 
 ## Figures and visual analysis
 
